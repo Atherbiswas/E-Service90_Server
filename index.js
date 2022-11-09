@@ -11,8 +11,25 @@ app.use(express.json());
 
 //mongodb cdn
 const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.SECURITY_KEY}@cluster0.ukuxru5.mongodb.net/?retryWrites=true&w=majority`;
-console.log(uri)
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 });
+
+async function run(){
+    try{
+        const serviceCollection = client.db('e-service90DbUser').collection('services');
+
+        app.get('/services', async(req, res) => {
+            const query = {};
+            const cursor = serviceCollection.find(query);
+            const services = await cursor.limit(3).toArray();
+            res.send(services);
+        })
+        
+    }
+    finally{
+        
+    }
+}
+run().catch(error => console.error(error))
 
 
 
