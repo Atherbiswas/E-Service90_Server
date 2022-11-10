@@ -19,18 +19,16 @@ const client = new MongoClient(uri, {
 
 async function run() {
   try {
-    const serviceCollection = client
-      .db("e-service90DbUser")
-      .collection("services");
-    const reviewCollection = client
-      .db("e-service90DbUser")
-      .collection("reviews");
+    const serviceCollection = client.db("e-service90DbUser").collection("services");
+
+    const reviewCollection = client.db("e-service90DbUser").collection("reviews");
 
     app.get("/services", async (req, res) => {
       const query = {};
       const cursor = serviceCollection.find(query);
       const services = await cursor.limit(3).toArray();
       res.send(services);
+
     });
     app.get("/allServices", async (req, res) => {
       const query = {};
@@ -45,6 +43,7 @@ async function run() {
       const service = await serviceCollection.findOne(query);
       res.send(service);
     });
+
     app.get("/checkout/:id", async (req, res) => {
       const id = req.params.id;
       const query = { _id: ObjectId(id) };
@@ -90,9 +89,11 @@ async function run() {
 }
 run().catch((error) => console.error(error));
 
+
 app.get("/", (req, res) => {
   res.send("E-service90 server is running");
 });
+
 
 app.listen(port, () => {
   console.log(`E-service90 running on : ${port}`);
