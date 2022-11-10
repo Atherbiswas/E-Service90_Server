@@ -70,20 +70,20 @@ async function run() {
       res.send(result);
     });
 
-    app.get("/servicesRevew/:id", async (req, res) => {
-      const revid = req.params.id;
+    // app.get("/servicesReview/:id", async (req, res) => {
+    // //   const revid = req.params.id;
       
-      const query = {service:revid};
-      const result = await reviewCollection.findOne(query);
+    // //   const query = {service:revid};
+    // //   const result = await reviewCollection.findOne(query);
      
-      res.send(result)
-    });
+    // //   res.send(result)
+    // // });
 
     app.delete("/reviews/:id", async (req, res) => {
       const id = req.params.id;
       const query = { _id: ObjectId(id) };
       const result = await reviewCollection.deleteOne(query);
-      res.send();
+      res.send(result);
     });
   } finally {
   }
